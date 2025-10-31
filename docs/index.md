@@ -5,7 +5,7 @@ title: LakeXpress - Fast Database-to-Parquet Export Tool
 
 ## What is LakeXpress?
 
-LakeXpress is a command-line tool designed to efficiently export database tables to partitioned Parquet files with multi-cloud object storage support. Whether you're building a data lake, creating analytical datasets, or archiving production data, LakeXpress handles parallel exports, schema discovery, and multi-cloud storage to make large-scale data exports both reliable and efficient. Built on top of [FastBCP](https://www.arpe.io/fastbcp/?v=82a9e4d26595), it combines intelligent partitioning with high-performance parallel data transfer for maximum throughput.
+LakeXpress is a command-line tool designed to efficiently export database tables to partitioned Parquet files with multi-cloud object storage support. Whether you're building a data lake, creating analytical datasets, or archiving production data, LakeXpress handles parallel exports, schema discovery, and multi-cloud storage to make large-scale data exports both reliable and efficient. Built on top of [FastBCP](https://www.arpe.io/fastbcp/?v=82a9e4d26595) for high-performance parallel data transfer with intelligent partitioning.
 
 ## Key Features
 
@@ -28,7 +28,7 @@ LakeXpress is a command-line tool designed to efficiently export database tables
   --source_schema_name public `
   --include "orders%, customer%" `
   --fastbcp_dir_path ./FastBCP_win-x64_v0.4.0/ `
-  --target_storage_id aws_s3_01 `
+  --target_storage_id s3_01 `
   --n_jobs 4 `
   --fastbcp_p 2 `
   --generate_metadata
@@ -42,7 +42,7 @@ LakeXpress is a command-line tool designed to efficiently export database tables
   --source_schema_name public \
   --include "orders%, customer%" \
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --n_jobs 4 \
   --fastbcp_p 2 \
   --generate_metadata

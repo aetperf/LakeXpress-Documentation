@@ -69,45 +69,131 @@ The user running LakeXpress must have:
 - Sufficient disk space for exported data
 - Ability to create subdirectories
 
-## Amazon S3
+## S3-Compatible Storage
 
-Export Parquet files directly to Amazon S3 buckets or S3-compatible storage.
+LakeXpress uses a **unified S3 storage type** for all S3-compatible storage providers. Whether you're using AWS S3, OVH S3, MinIO, Wasabi, or any other S3-compatible storage, you configure them all with `storage_type: "s3"`. Provider differentiation is handled through configuration parameters like `endpoint_url`.
 
-### Authentication Configuration
+**Supported S3-Compatible Providers:**
+- Amazon S3
+- OVH S3
+- MinIO
+- Wasabi
+- DigitalOcean Spaces
+- Backblaze B2
+- Any S3-compatible object storage
 
-Add S3 credentials to your authentication JSON file:
+### Configuration Methods
 
+LakeXpress supports three configuration methods for S3 storage:
+
+1. **AWS Profile** (recommended for AWS S3)
+2. **Direct Credentials with Endpoint** (for non-AWS S3-compatible storage)
+3. **Direct Credentials** (simple AWS S3 setup)
+
+---
+
+### Method 1: AWS Profile Configuration (Recommended for AWS)
+
+Use AWS CLI profiles from `~/.aws/config` and `~/.aws/credentials`:
+
+**Credentials JSON:**
 ```json
 {
-  "aws_s3_01": {
+  "s3_01": {
     "storage_type": "s3",
     "info": {
       "profile": "your-aws-profile",
       "bucket": "your-bucket-name",
       "base_path": "lakexpress/exports",
-      "region": "eu-west-1"
+      "region": "us-east-1"
     }
   }
 }
 ```
 
-### Configuration Fields
+**AWS Profile Setup (`~/.aws/config`):**
+```ini
+[profile your-aws-profile]
+region = us-east-1
+```
+
+**AWS Credentials (`~/.aws/credentials`):**
+```ini
+[your-aws-profile]
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+```
+
+**Configuration Fields:**
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `storage_type` | Yes | Must be `"s3"` |
+| `storage_type` | Yes | Must be `"s3"` for all S3-compatible storage |
 | `profile` | Yes | AWS profile name from `~/.aws/credentials` |
 | `bucket` | Yes | S3 bucket name |
 | `base_path` | No | Base path prefix within bucket |
 | `region` | Yes | AWS region (e.g., `us-east-1`, `eu-west-1`) |
 
-### Alternative: Direct Credentials
+---
 
-Instead of using AWS profiles, you can specify credentials directly:
+### Method 2: Direct Credentials with Endpoint (S3-Compatible Providers)
+
+For non-AWS S3-compatible storage (OVH, MinIO, etc.), use direct credentials with `endpoint_url`:
+
+**Example: OVH S3**
+```json
+{
+  "s3_02": {
+    "storage_type": "s3",
+    "info": {
+      "bucket": "your-ovh-bucket",
+      "base_path": "lakexpress",
+      "endpoint_url": "https://s3.gra.io.cloud.ovh.net",
+      "region": "gra",
+      "aws_access_key_id": "YOUR_OVH_ACCESS_KEY",
+      "aws_secret_access_key": "YOUR_OVH_SECRET_KEY"
+    }
+  }
+}
+```
+
+**Example: MinIO**
+```json
+{
+  "s3_03": {
+    "storage_type": "s3",
+    "info": {
+      "bucket": "data-lake",
+      "endpoint_url": "http://localhost:9000",
+      "region": "us-east-1",
+      "aws_access_key_id": "minioadmin",
+      "aws_secret_access_key": "minioadmin"
+    }
+  }
+}
+```
+
+**Configuration Fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `storage_type` | Yes | Must be `"s3"` |
+| `bucket` | Yes | S3 bucket name |
+| `endpoint_url` | Yes | Custom S3 endpoint URL (provider-specific) |
+| `region` | Yes | Region identifier |
+| `aws_access_key_id` | Yes | Access key ID |
+| `aws_secret_access_key` | Yes | Secret access key |
+| `base_path` | No | Base path prefix within bucket |
+
+---
+
+### Method 3: Direct Credentials (Simple AWS S3)
+
+For simple AWS S3 setup without AWS profiles:
 
 ```json
 {
-  "aws_s3_direct": {
+  "s3_01": {
     "storage_type": "s3",
     "info": {
       "bucket_name": "my-data-lake",
@@ -120,12 +206,31 @@ Instead of using AWS profiles, you can specify credentials directly:
 }
 ```
 
-### Usage Example
+---
 
+### Usage Examples
+
+**AWS S3:**
 ```bash
 ./LakeXpress -a auth.json --log_db_auth_id log_db_ms \
         --source_db_auth_id ds_03_pg \
-        --target_storage_id aws_s3_01 \
+        --target_storage_id s3_01 \
+        --fastbcp_dir_path /path/to/fastbcp
+```
+
+**OVH S3:**
+```bash
+./LakeXpress -a auth.json --log_db_auth_id log_db_ms \
+        --source_db_auth_id ds_03_pg \
+        --target_storage_id s3_02 \
+        --fastbcp_dir_path /path/to/fastbcp
+```
+
+**MinIO:**
+```bash
+./LakeXpress -a auth.json --log_db_auth_id log_db_ms \
+        --source_db_auth_id ds_03_pg \
+        --target_storage_id s3_03 \
         --fastbcp_dir_path /path/to/fastbcp
 ```
 
@@ -141,7 +246,7 @@ With `--sub_path`:
 s3://bucket-name/base_path/sub_path/schema_name/table_name/part-00000.parquet
 ```
 
-### Required IAM Permissions
+### Required IAM Permissions (AWS S3)
 
 The AWS IAM user or role must have these permissions:
 
@@ -166,59 +271,9 @@ The AWS IAM user or role must have these permissions:
 }
 ```
 
-## S3-Compatible Storage (OVH, MinIO, etc.)
+### Backward Compatibility
 
-LakeXpress supports S3-compatible storage providers like OVH S3, MinIO, Wasabi, and others.
-
-### Authentication Configuration
-
-```json
-{
-  "ovh_s3_01": {
-    "storage_type": "s3",
-    "info": {
-      "bucket": "your-ovh-bucket",
-      "base_path": "lakexpress",
-      "endpoint_url": "https://s3.gra.io.cloud.ovh.net",
-      "region": "gra",
-      "aws_access_key_id": "YOUR_OVH_ACCESS_KEY",
-      "aws_secret_access_key": "YOUR_OVH_SECRET_KEY"
-    }
-  }
-}
-```
-
-### Additional Field for S3-Compatible
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `endpoint_url` | Yes | Custom S3 endpoint URL |
-
-### Example: OVH S3
-
-```bash
-./LakeXpress -a auth.json --log_db_auth_id log_db_ms \
-        --source_db_auth_id ds_03_pg \
-        --target_storage_id ovh_s3_01 \
-        --fastbcp_dir_path /path/to/fastbcp
-```
-
-### Example: MinIO
-
-```json
-{
-  "minio_01": {
-    "storage_type": "s3",
-    "info": {
-      "bucket": "data-lake",
-      "endpoint_url": "http://localhost:9000",
-      "region": "us-east-1",
-      "aws_access_key_id": "minioadmin",
-      "aws_secret_access_key": "minioadmin"
-    }
-  }
-}
-```
+LakeXpress maintains backward compatibility with custom storage types ending in `_s3` (e.g., `minio_s3`, `custom_s3`). However, the recommended approach is to use the unified `storage_type: "s3"` for all S3-compatible storage.
 
 ## Google Cloud Storage (GCS)
 

@@ -84,7 +84,7 @@ Build your LakeXpress command interactively.
 
     <div class="form-group" id="cloud-storage-group" style="display: none;">
       <label for="storage-id">Target Storage ID:</label>
-      <input type="text" id="storage-id" placeholder="e.g., aws_s3_01, gcs_01" />
+      <input type="text" id="storage-id" placeholder="e.g., s3_01, s3_02, gcs_01" />
     </div>
 
     <div class="form-group">

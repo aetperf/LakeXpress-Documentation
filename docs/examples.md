@@ -10,11 +10,11 @@ Practical examples demonstrating common LakeXpress export scenarios.
 ## Table of Contents
 
 - [PostgreSQL to Local Filesystem](#postgresql-to-local-filesystem)
-- [PostgreSQL to AWS S3](#postgresql-to-aws-s3)
+- [PostgreSQL to S3 Storage](#postgresql-to-aws-s3)
 - [PostgreSQL to Google Cloud Storage](#postgresql-to-google-cloud-storage)
 - [PostgreSQL to OVH S3](#postgresql-to-ovh-s3-compatible)
 - [SQL Server to Local Filesystem](#sql-server-to-local-filesystem)
-- [SQL Server to AWS S3](#sql-server-to-aws-s3)
+- [SQL Server to S3 Storage](#sql-server-to-aws-s3)
 - [Multi-Schema Export](#multi-schema-export)
 - [Table Filtering Examples](#table-filtering-examples)
 - [Resume Failed Exports](#resume-failed-exports)
@@ -64,7 +64,7 @@ Export PostgreSQL database to local directory with CDM metadata.
 
 **Result:** Exports all tables from `tpch_1` schema to `/tmp/tpch/tpch_1/` with CDM manifest.
 
-## PostgreSQL to AWS S3
+## PostgreSQL to S3 Storage
 
 Export PostgreSQL database directly to Amazon S3.
 
@@ -86,7 +86,7 @@ Export PostgreSQL database directly to Amazon S3.
   --fastbcp_dir_path .\FastBCP_win-x64_v0.4.0\ `
   --fastbcp_p 2 `
   --n_jobs 4 `
-  --target_storage_id aws_s3_01 `
+  --target_storage_id s3_01 `
   --generate_metadata
 ```
 
@@ -101,7 +101,7 @@ Export PostgreSQL database directly to Amazon S3.
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
   --fastbcp_p 2 \
   --n_jobs 4 \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --generate_metadata
 ```
 
@@ -150,7 +150,7 @@ Export PostgreSQL database to Google Cloud Storage bucket.
 
 **Result:** Exports all schemas matching `tpch_1%` pattern to GCS.
 
-## PostgreSQL to OVH S3-Compatible
+## PostgreSQL to S3 Storage (OVH)
 
 Export to OVH S3-compatible object storage.
 
@@ -172,7 +172,7 @@ Export to OVH S3-compatible object storage.
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
   --fastbcp_p 2 \
   --n_jobs 4 \
-  --target_storage_id ovh_s3_01 \
+  --target_storage_id s3_02 \
   --generate_metadata
 ```
 
@@ -180,7 +180,7 @@ Export to OVH S3-compatible object storage.
 
 ```json
 {
-  "ovh_s3_01": {
+  "s3_02": {
     "storage_type": "s3",
     "info": {
       "bucket": "my-ovh-bucket",
@@ -238,7 +238,7 @@ Export to a specific sub-directory using `--sub_path`:
 
 **Result:** Creates `/tmp/adventureworks2019/schema/table/` structure.
 
-## SQL Server to AWS S3
+## SQL Server to S3 Storage
 
 Export SQL Server database to Amazon S3 with custom sub-path.
 
@@ -260,7 +260,7 @@ Export SQL Server database to Amazon S3 with custom sub-path.
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
   --fastbcp_p 2 \
   --n_jobs 4 \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --sub_path adventureworksdw \
   --generate_metadata
 ```
@@ -288,7 +288,7 @@ Export multiple schemas using pattern matching.
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
   --fastbcp_p 2 \
   --n_jobs 4 \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --sub_path titi/tata \
   --generate_metadata
 ```

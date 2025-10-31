@@ -76,7 +76,7 @@ Create a JSON file with your database and storage connection details:
       "filepath": "/path/to/lakexpress_log.sqlite"
     }
   },
-  "aws_s3_01": {
+  "s3_01": {
     "storage_type": "s3",
     "info": {
       "bucket_name": "my-data-lake",
@@ -170,7 +170,7 @@ Export to AWS S3 with CDM metadata generation:
   --source_db_auth_id source_postgres `
   --source_schema_name public `
   --fastbcp_dir_path ./FastBCP_win-x64_v0.4.0/ `
-  --target_storage_id aws_s3_01 `
+  --target_storage_id s3_01 `
   --n_jobs 4 `
   --fastbcp_p 2 `
   --generate_metadata `
@@ -184,7 +184,7 @@ Export to AWS S3 with CDM metadata generation:
   --source_db_auth_id source_postgres \
   --source_schema_name public \
   --fastbcp_dir_path ./FastBCP_linux-x64_v0.4.0/ \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --n_jobs 4 \
   --fastbcp_p 2 \
   --generate_metadata \
@@ -192,7 +192,7 @@ Export to AWS S3 with CDM metadata generation:
 ```
 
 This command will:
-- Export to S3 bucket configured in `aws_s3_01`
+- Export to S3 bucket configured in `s3_01`
 - Generate Common Data Model (CDM) metadata
 - Create individual entity `.cdm.json` files for each table
 

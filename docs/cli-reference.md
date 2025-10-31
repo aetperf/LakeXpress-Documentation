@@ -145,7 +145,7 @@ Format: `table:method:key_column:p[;table:method:key_column:p;...]`
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `--target_storage_id ID` | String | Target storage ID for cloud exports<br>**Mutually exclusive with** `--output_dir`<br>Examples: `aws_s3_01`, `gcs_01`, `ovh_s3_01` |
+| `--target_storage_id ID` | String | Target storage ID for cloud exports<br>**Mutually exclusive with** `--output_dir`<br>Examples: `s3_01`, `gcs_01`, `s3_02` |
 | `--sub_path SUB_PATH` | String | Optional sub-path between base path and schema directory<br>Example: `staging/temp` creates `base/staging/temp/schema/table/` |
 
 **Important:** You must specify **either** `--output_dir` (local filesystem) **or** `--target_storage_id` (cloud storage). These options are mutually exclusive.
@@ -181,7 +181,7 @@ Here's a comprehensive example using many options:
   --fastbcp_p 4 `
   --large_table_threshold 500000 `
   --n_jobs 8 `
-  --target_storage_id aws_s3_01 `
+  --target_storage_id s3_01 `
   --sub_path data-lake/staging `
   --generate_metadata `
   --include_entity_files `
@@ -204,7 +204,7 @@ Here's a comprehensive example using many options:
   --fastbcp_p 4 \
   --large_table_threshold 500000 \
   --n_jobs 8 \
-  --target_storage_id aws_s3_01 \
+  --target_storage_id s3_01 \
   --sub_path data-lake/staging \
   --generate_metadata \
   --include_entity_files \
