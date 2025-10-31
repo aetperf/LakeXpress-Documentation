@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/railroad.css' | relative_url }}">
+    <link rel="icon" type="image/x-icon" href="{{ '/assets/images/icon.ico' | relative_url }}">
+    <script src="{{ '/assets/js/railroad-diagrams.js' | relative_url }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="{{ '/' | relative_url }}" class="logo">
+                    <img src="{{ '/assets/images/LX.jpg' | relative_url }}" alt="LakeXpress" class="logo-img">
+                    <span>LakeXpress</span>
+                </a>
+                <div class="version-info">
+                    <span class="version-badge">v{{ site.data.version.lakexpress_version }}</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="{{ '/' | relative_url }}">Home</a></li>
+                    <li><a href="{{ '/quickstart' | relative_url }}">Quick Start</a></li>
+                    <li><a href="{{ '/cli-reference' | relative_url }}">CLI Reference</a></li>
+                    <li><a href="{{ '/syntax' | relative_url }}">Syntax Diagrams</a></li>
+                    <li><a href="{{ '/command-builder' | relative_url }}">Command Builder</a></li>
+                    <li><a href="{{ '/storage-backends' | relative_url }}">Storage Backends</a></li>
+                    <li><a href="{{ '/database-configuration' | relative_url }}">Database Config</a></li>
+                    <li><a href="{{ '/fastbcp-configuration' | relative_url }}">FastBCP Config</a></li>
+                    <li><a href="{{ '/examples' | relative_url }}">Examples</a></li>
+                    <li><a href="{{ '/troubleshooting' | relative_url }}">Troubleshooting</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        {{ content }}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LakeXpress. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>

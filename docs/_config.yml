@@ -1,0 +1,29 @@
+title: LakeXpress Documentation
+description: Fast and reliable database-to-parquet export tool with multi-cloud object storage support
+baseurl: "/LakeXpress-Documentation"
+url: ""
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - index.md
+  - quickstart.md
+  - cli-reference.md
+  - syntax.md
+  - command-builder.md
+  - storage-backends.md
+  - database-configuration.md
+  - fastbcp-configuration.md
+  - examples.md
+  - troubleshooting.md
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"

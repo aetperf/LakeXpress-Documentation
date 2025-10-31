@@ -1,0 +1,163 @@
+/* Railroad Diagram Styling - Based on DuckDB approach */
+
+svg.railroad-diagram {
+    background-color: hsl(30,20%,95%);
+    max-width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+svg.railroad-diagram path {
+    stroke-width: 1.5;
+    stroke: black;
+    fill: rgba(0,0,0,0);
+}
+
+svg.railroad-diagram text {
+    font: 12px "JetBrains Mono", "Consolas", "Monaco", "Lucida Console", monospace;
+    text-anchor: middle;
+    white-space: pre;
+}
+
+svg.railroad-diagram text.diagram-text {
+    font-size: 12px;
+}
+
+svg.railroad-diagram text.comment {
+    font: italic 12px "JetBrains Mono", monospace;
+}
+
+svg.railroad-diagram g.non-terminal text {
+    /*font-style: italic;*/
+}
+
+svg.railroad-diagram rect {
+    stroke-width: 1.5;
+    stroke: black;
+    fill: hsl(120,100%,90%);
+}
+
+svg.railroad-diagram rect.group-box {
+    stroke: gray;
+    stroke-dasharray: 10 5;
+    fill: none;
+}
+
+svg.railroad-diagram path.diagram-text {
+    stroke-width: 1.5;
+    stroke: black;
+    fill: white;
+    cursor: pointer;
+}
+
+svg.railroad-diagram g.diagram-text:hover path.diagram-text {
+    fill: #fef361;
+}
+
+svg.railroad-diagram g.diagram-text text {
+    font-weight: bold;
+}
+
+path.diagram-text {
+    cursor: pointer;
+}
+
+g.expandable-wrapper {
+    cursor: pointer;
+}
+
+g.expandable-wrapper:hover rect {
+    fill: #fef361;
+}
+
+g.expandable-wrapper text {
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+}
+
+svg.railroad-diagram g.non-terminal rect {
+    fill: hsl(220,100%,90%);
+}
+
+svg.railroad-diagram g.terminal rect {
+    fill: hsl(0,0%,90%);
+    rx: 3;
+    ry: 3;
+}
+
+/* Specific styling for different element types */
+.terminal {
+    fill: #f2f2f2;
+    stroke: #666;
+    stroke-width: 1;
+}
+
+.terminal text {
+    fill: #000;
+    font-weight: bold;
+}
+
+.non-terminal {
+    fill: #e6e6e6;
+    stroke: #666;
+    stroke-width: 1;
+}
+
+.non-terminal text {
+    fill: #000;
+    font-style: italic;
+}
+
+/* Container styling */
+.railroad-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.railroad-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.railroad-description {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+/* PNG diagram styling */
+.railroad-diagram {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+/* Container styling for diagrams */
+.diagram-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.diagram-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.diagram-description {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 0.9em;
+    font-style: italic;
+}

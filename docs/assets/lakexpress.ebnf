@@ -1,0 +1,159 @@
+Syntax ::=
+    ( NormalExportCommand | ResumeCommand | MetadataCommand | InitDbCommand | VersionCommand )
+
+NormalExportCommand ::=
+    LakeXpressCommand CoreAuthentication SourceDatabase OutputDestination
+    FastBCPConfiguration
+    (|TableFiltering) (|ExecutionControl)
+    (|MetadataOptions) (|LoggingOptions) (|LicenseOptions)
+
+ResumeCommand ::=
+    LakeXpressCommand CoreAuthentication ( "--resume" | "-r" ) RunId
+    "--source_db_auth_id" AuthId "--fastbcp_dir_path" DirectoryPath
+    (|OutputDestination) (|FastBCPOptionalOptions) (|ExecutionControl)
+    (|MetadataOptions) (|LoggingOptions) (|LicenseOptions)
+
+MetadataCommand ::=
+    LakeXpressCommand CoreAuthentication "--generate_metadata" "--run_id" RunId
+    "--source_db_auth_id" AuthId OutputDestination
+    (|MetadataDetailOptions) (|LoggingOptions) (|LicenseOptions)
+
+InitDbCommand ::=
+    LakeXpressCommand CoreAuthentication "--init_db"
+    (|InitDbOptions) (|LoggingOptions) (|LicenseOptions)
+
+VersionCommand ::=
+    LakeXpressCommand "--version"
+
+LakeXpressCommand ::=
+    ( "lakexpress" | "lxpress" )
+
+CoreAuthentication ::=
+    ( "--auth" | "-a" ) AuthFile "--log_db_auth_id" AuthId
+
+SourceDatabase ::=
+    "--source_db_auth_id" AuthId
+    (|"--source_db_name" DatabaseName)
+    (|"--source_schema_name" SchemaPattern)
+
+OutputDestination ::=
+    ( FilesystemOutput | CloudStorageOutput )
+
+FilesystemOutput ::=
+    "--output_dir" DirectoryPath (|"--sub_path" SubPath)
+
+CloudStorageOutput ::=
+    "--target_storage_id" StorageId (|"--sub_path" SubPath)
+
+FastBCPConfiguration ::=
+    "--fastbcp_dir_path" DirectoryPath (|FastBCPOptionalOptions)
+
+FastBCPOptionalOptions ::=
+    (|( "--fastbcp_p" | "-p" ) ThreadCount)
+    (|"--fastbcp_table_config" TableConfigString)
+    (|"--large_table_threshold" RowThreshold)
+
+TableFiltering ::=
+    (|IncludePattern) (|ExcludePattern)
+
+IncludePattern ::=
+    ( "--include" | "-i" ) TablePattern
+
+ExcludePattern ::=
+    ( "--exclude" | "-e" ) TablePattern
+
+ExecutionControl ::=
+    (|"--n_jobs" JobCount)
+    (|"--env_name" EnvironmentName)
+
+MetadataOptions ::=
+    (|"--generate_metadata")
+    (|MetadataDetailOptions)
+
+MetadataDetailOptions ::=
+    (|"--include_entity_files")
+    (|"--manifest_name" ManifestName)
+
+InitDbOptions ::=
+    (|"--log_db_mode" LogDbMode)
+
+LogDbMode ::=
+    ( "preserve" | "truncate" | "drop" )
+
+LoggingOptions ::=
+    (|"--log_level" LogLevel)
+    (|"--log_dir" DirectoryPath)
+    (|"--log_db_mode" LogDbMode)
+
+LogLevel ::=
+    ( "DEBUG" | "INFO" | "WARNING" | "ERROR" | "CRITICAL" )
+
+LicenseOptions ::=
+    (|"--license" LicenseText)
+    (|"--license_file" FilePath)
+
+AuthFile ::=
+    FilePath
+
+AuthId ::=
+    Identifier
+
+DatabaseName ::=
+    Identifier
+
+SchemaPattern ::=
+    String
+
+StorageId ::=
+    Identifier
+
+DirectoryPath ::=
+    FilePath
+
+SubPath ::=
+    String
+
+RunId ::=
+    UUID
+
+JobCount ::=
+    PositiveInteger
+
+ThreadCount ::=
+    PositiveInteger
+
+RowThreshold ::=
+    PositiveInteger
+
+RowCount ::=
+    PositiveInteger
+
+TablePattern ::=
+    String
+
+TableConfigString ::=
+    String
+
+EnvironmentName ::=
+    String
+
+ManifestName ::=
+    String
+
+LicenseText ::=
+    String
+
+PositiveInteger ::=
+    "<positive_integer>"
+
+String ::=
+    "<string>"
+
+Identifier ::=
+    "<identifier>"
+
+FilePath ::=
+    "<file_path>"
+
+UUID ::=
+    "<uuid>"
