@@ -351,7 +351,7 @@ gcloud iam service-accounts keys create service-account-key.json \
 All storage backends support the `--sub_path` option to add an intermediate directory level:
 
 ```bash
-./LakeXpress --target_storage_id aws_s3_01 --sub_path staging/daily/2025-01-15 ...
+./LakeXpress --target_storage_id s3_01 --sub_path staging/daily/2025-01-15 ...
 ```
 
 Creates:
